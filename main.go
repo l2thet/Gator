@@ -49,6 +49,7 @@ func main() {
 
 	cmds.register("login", handlerLogin)
 	cmds.register("register", handlerRegister)
+	cmds.register("reset", handlerReset)
 
 	args := os.Args
 	if len(args) < 2 {
@@ -121,5 +122,21 @@ func handlerRegister(s *State, cmd Command) error {
 	fmt.Printf("User %s has been created and set as the current user\n", user.Name)
 	fmt.Printf("User: %+v\n", user)
 
+	return nil
+}
+
+func handlerReset(s *State, cmd Command) error {
+	if len(cmd.Args) != 0 {
+		err := fmt.Errorf("usage: %s", cmd.Name)
+		return err
+	}
+
+	err := s.db.DeleteAllUsers(context.Background())
+	if err != nil {
+		log.Fatalf("Error deleting all users: %v", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("All users have been deleted")
 	return nil
 }
