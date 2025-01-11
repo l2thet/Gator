@@ -1,4 +1,4 @@
-# gator
+# Gator
 
 ## My Go and PostgreSQL Project for Tracking RSS Feeds
 
